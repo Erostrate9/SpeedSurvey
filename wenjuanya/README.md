@@ -1,0 +1,1 @@
+The backend project of SpeedSurvey based on SSM which mainly provides RESTful API.
