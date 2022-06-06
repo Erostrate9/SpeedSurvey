@@ -7,11 +7,11 @@
           <div class="header">
             <a href="/">
               <img
-                src="http://qny.yyangjiao.top/logo.png"
+                src="../assets/logo.svg"
                 class="logo"
                 alt="logo"
               />
-              <span class="title">问卷鸭</span>
+              <span class="title">速填</span>
             </a>
           </div>
           <div class="desc">一款新型问卷调查工具</div>

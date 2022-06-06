@@ -5,8 +5,8 @@
       <a-col class="container" :xs="24" :md="24" :lg="20" :xl="16">
         <div class="header">
           <div class="logo">
-            <img src="http://qny.yyangjiao.top/logo.png" alt="" />
-            <span>问卷鸭</span>
+            <img src="../../assets/logo.svg" alt="" />
+            <span>速填</span>
           </div>
           <div class="description">一款新型问卷调查工具</div>
         </div>

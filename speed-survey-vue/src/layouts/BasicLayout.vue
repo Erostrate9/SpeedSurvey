@@ -13,8 +13,8 @@
   >
     <template v-slot:menuHeaderRender>
       <div>
-        <img src="http://qny.yyangjiao.top/logo.png" />
-        <h1>问卷鸭</h1>
+        <img src="../assets/logo.svg" />
+        <h1>速填</h1>
       </div>
     </template>
     <template v-slot:rightContentRender>
@@ -32,7 +32,7 @@
               shape="square"
               slot="avatar"
               :size="32"
-              src="http://qny.yyangjiao.top/logo.png"
+              src="../assets/logo.svg"
             ></a-avatar>
             <span style="margin-left: 8px">yangjiao</span>
           </span>

@@ -7,7 +7,7 @@
     </template>
     <template v-slot:copyright>
       <span
-        >问卷鸭 |
+        >速填 |
         <a href="https://github.com/yyangjiao" target="_blank"
           >yangjiao</a
         ></span
