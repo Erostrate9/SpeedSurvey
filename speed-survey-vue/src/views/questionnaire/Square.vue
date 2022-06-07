@@ -44,7 +44,7 @@
                     shape="square"
                     slot="avatar"
                     :size="80"
-                    src="../../assets/logo.svg"
+                    src="/logo.png"
                   />
                 </a-card-meta>
               </router-link>
@@ -68,7 +68,7 @@
                 style="border-radius: 0"
                 shape="square"
                 :size="80"
-                src="../../assets/logo.svg"
+                src="/logo.svg"
               />
             </template>
           </a-card-meta>
@@ -100,7 +100,7 @@
                   <a-avatar
                     style="border-radius: 0"
                     shape="square"
-                    src="../../assets/logo.svg"
+                    src="/logo.png"
                   />
                 </template>
               </a-list-item-meta>

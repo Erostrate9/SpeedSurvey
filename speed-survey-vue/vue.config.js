@@ -1,6 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 const mockGet = require('./mock/index.js');
 module.exports = defineConfig({
+  publicPath:'/',
   transpileDependencies: true,
   // less
   css: {
