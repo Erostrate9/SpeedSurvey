@@ -61,7 +61,7 @@
               <!--内容区域-->
               <div class="content">
                 <div v-show="nowSelect.id==0||nowSelect.id==null">请先选择问卷</div>
-                <!-- <design ref="design" v-show="nowSelect.id!=0&&nowSelect.id!=null"></design> -->
+                <design ref="design" v-show="nowSelect.id!=0&&nowSelect.id!=null"></design>
               </div>
             </el-tab-pane>
             <el-tab-pane label="回答统计" name="hdtj">
@@ -134,14 +134,14 @@
 </template>
 <script>
   import {designOpera} from './api'
-  // import Design from './Design.vue'
+  import Design from './Design.vue'
   // import DataShow from './DataShow.vue'
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
   // import QRCode from 'qrcode'
   export default{
     components:{
       ElButton,
-      // Design,
+      Design,
       // QRCode,
       // DataShow,
     },
