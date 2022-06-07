@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+const mockGet = require('./mock/index.js');
 module.exports = defineConfig({
   transpileDependencies: true,
   // less
@@ -10,9 +11,25 @@ module.exports = defineConfig({
     }
   },
   // 配置代理
-  devServer: {
-    proxy: 'http://localhost:5000'
-  },
+  // proxy: 'http://localhost:5000',
+  devServer:{
+    proxy:{
+      '/questionnaire':{
+        target:'http://localhost:5000',
+        changeOrigin: true
+      }
+    },
+    onBeforeSetupMiddleware: function (devServer) {
+      if (!devServer) {
+        throw new Error('webpack-dev-server is not defined');
+      }
+      mockGet(devServer.app);
+      // devServer.app.get('/some/path', function (req, res) {
+      //   res.json({ custom: 'response' });
+      // });
+    },
+  }
+  
 
   /*
     =============================================================================================================
