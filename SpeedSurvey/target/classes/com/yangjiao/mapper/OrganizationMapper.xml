@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangjiao.mapper.OrganizationMapper">
+
+    <select id="selectAllByUserId" resultType="organization">
+        select organization.id, organization.name, organization.description, organization.logo
+        from user,
+             organization,
+             user_organization
+        where user.id = #{userId}
+          and user_organization.user_id = user.id
+          and user_organization.organization_id = organization.id
+
+    </select>
+</mapper>
