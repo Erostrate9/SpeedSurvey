@@ -14,12 +14,6 @@ module.exports = defineConfig({
   // 配置代理
   // proxy: 'http://localhost:5000',
   devServer:{
-    proxy:{
-      '/questionnaire':{
-        target:'http://localhost:5000',
-        changeOrigin: true
-      }
-    },
     onBeforeSetupMiddleware: function (devServer) {
       if (!devServer) {
         throw new Error('webpack-dev-server is not defined');
@@ -29,6 +23,12 @@ module.exports = defineConfig({
       //   res.json({ custom: 'response' });
       // });
     },
+    // proxy:{
+    //   '/questionnaire':{
+    //     target:'http://localhost:5000',
+    //     changeOrigin: true
+    //   }
+    // }
   }
   
 

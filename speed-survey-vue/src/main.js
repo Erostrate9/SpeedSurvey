@@ -7,6 +7,7 @@ import Vue from 'vue'
 
 import App from '@/App.vue'
 
+import VueClipboard from "vue-clipboard2";
 import router from '@/router'
 import ProLayout from '@ant-design-vue/pro-layout'
 import store from './store/'
@@ -20,6 +21,7 @@ import { notification } from 'ant-design-vue'
 import { message } from 'ant-design-vue'
 import './plugins/element.js'
 
+Vue.use(VueClipboard);
 Vue.use(ElementUI);
 Vue.use(antd);
 Vue.config.productionTip = false

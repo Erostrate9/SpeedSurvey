@@ -109,7 +109,8 @@
   </div>
 </template>
 <script>
-  import {designOpera} from './api'
+  import axios from 'axios';
+import {designOpera} from './api'
   export default{
     data(){
       return{
@@ -160,17 +161,26 @@
       //获取问题列表(问卷内容)
       getQuestionList(){
         this.detail=[];
-        this.loading=true;
-        designOpera({
-          opera_type:'get_question_list',
+        this.loading=false;
+        var that=this;
+        // designOpera({
+        //   opera_type:'get_question_list',
+        //   username:'test',
+        //   wjId:this.wjId,
+        // })
+        //   .then(data=>{
+        //     console.log(data);
+        //     this.detail=data.detail;
+        //     this.loading=false;
+        //   })
+        axios.post('/api/questionlist',{
           username:'test',
-          wjId:this.wjId,
+          wjId:that.wjId
         })
-          .then(data=>{
-            console.log(data);
-            this.detail=data.detail;
-            this.loading=false;
-          })
+        .then(data=>{
+          that.detail=data.data.data;
+          that.lodaing=false;
+        })
       },
       //点击添加问题按钮
       addQuestion(){

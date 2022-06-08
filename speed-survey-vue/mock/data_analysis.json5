@@ -1,0 +1,57 @@
+{
+    data:[
+        {
+        "title": "@ctitle()",
+        "type": "radio",
+        result:[
+            {
+                'option':"@ctitle()",
+                'count':"@integer(0,100)",
+                'percent':"@integer(0,100)%"
+            },
+            {
+                'option':"@ctitle()",
+                'count':"@integer(0,100)",
+                'percent':"@integer(0,100)%"
+            },
+            {
+                'option':"@ctitle()",
+                'count':"@integer(0,100)",
+                'percent':"@integer(0,100)%"
+            },
+        ],
+        "questionId":"@id()"
+        },
+        {
+        "title": "@ctitle()",
+        "type": "checkbox",
+        result:[
+            {
+                'option':"@ctitle()",
+                'count':"@integer(0,100)",
+                'percent':"@integer(0,100)%"
+            },
+            {
+                'option':"@ctitle()",
+                'count':"@integer(0,100)",
+                'percent':"@integer(0,100)%"
+            },
+            {
+                'option':"@ctitle()",
+                'count':"@integer(0,100)",
+                'percent':"@integer(0,100)%"
+            },
+        ],
+        "questionId":"@id()"
+        },
+        {
+        "title": "@ctitle()",
+        "type": "text",
+        result:'',
+        "questionId":"@id()"
+        },
+
+    ],
+    msg: '',
+    code: '0'
+}

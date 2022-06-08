@@ -125,12 +125,11 @@ authority：0-普通用户，1-高级用户，2-管理员
 | 2    | user_id             | 发布者id                | 是   | int(11)      |          |
 | 3    | title               | 问卷标题                | 是   | varchar(255) |          |
 | 4    | description         | 问卷描述                |      | varchar(255) |          |
-| 5    | password_required   | 0公开/1密码访问         |      | int(11)      |          |
-| 6    | password            | 访问密码                |      | char(8)      |          |
-| 7    | ip_limit            | 0不限制/1限制ip         |      | int(11)      |          |
-| 8    | belong_organization | null或0普通问卷/组织id  |      | int(11)      |          |
-| 9    | url                 | 问卷url                 |      | varchar(255) |          |
-| 10   | state               | 0已创建/1进行中/2已结束 |      | int(11)      |          |
+| 5    | password            | 访问密码                |      | char(8)      |          |
+| 6    | ip_limit            | 0不限制/1限制ip         |      | int(11)      |          |
+| 7    | belong_organization | null或0普通问卷/组织id  |      | int(11)      |          |
+| 8    | url                 | 问卷url                 |      | varchar(255) |          |
+| 9    | state               | 0已创建/1进行中/2已结束 |      | int(11)      |          |
 
 ### question
 
@@ -188,12 +187,11 @@ authority：0-普通用户，1-高级用户，2-管理员
 * 该表仅存储组织内问卷的选择题统计结果；本系统中非组织问卷（belong_organization==0）选择题的结果是不需要提交到此处的。
 * 不需要create_time
 
-| 序号 | 字段名称    | 注释                     | 必填 | 数据类型 | 主键唯一 |
-| ---- | ----------- | ------------------------ | ---- | -------- | -------- |
-| 1    | id          | 选择题答题id             | 是   | int(11)  | 是       |
-| 2    | user_id     | 提交者id。user表外键id   | 是   | int(11)  |          |
-| 3    | question_id | 问题id。question表外键id | 是   | int(11)  |          |
-| 4    | option_id   | 选项id。option表外键id   | 是   | int(11)  |          |
+| 序号 | 字段名称  | 注释                   | 必填 | 数据类型 | 主键唯一 |
+| ---- | --------- | ---------------------- | ---- | -------- | -------- |
+| 1    | id        | 选择题答题id           | 是   | int(11)  | 是       |
+| 2    | user_id   | 提交者id。user表外键id | 是   | int(11)  |          |
+| 3    | option_id | 选项id。option表外键id | 是   | int(11)  |          |
 
 ### organization
 
@@ -230,3 +228,22 @@ authority：0-普通用户，1-高级用户，2-管理员
 
 ## 接口规范
 
+### getWjList
+
+获取问卷列表
+
+data:{
+
+detail:[[{
+
+id: ,
+
+title:,
+
+desc:,
+
+status:,
+
+}]]
+
+}

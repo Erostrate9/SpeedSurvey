@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path')
 const JSON5 = require('json5')
 const Mock = require('mockjs')
+const bodyParser = require('body-parser')
+var jsonParser = bodyParser.json()
 
 //读取json文件
 function getJsonFile(filePath){
@@ -22,13 +24,49 @@ module.exports = function(app){
             res.json(Mock.mock(json))
         });
         app.get('/api/a',function(req,res){
-            var json = getJsonFile('./a.json5');
+            var json = getJsonFile('./userInfo.json5');
             res.json(Mock.mock(json))
         });
-        app.post('/api/design',function(req,res){
-            console.log(req.query);
-            var json = getJsonFile('./a.json5');
-            res.json(Mock.mock(json))
+        app.post('/api/test',function(req,res){
+            console.log(req.querys);
+            var json = getJsonFile('./userInfo.json5');
+            res.json(Mock.mock(json));
         })
+        app.post('/api/design',jsonParser,function(req,res){
+            console.log(req.body)
+            var json = getJsonFile('./userInfo.json5');
+            res.json(Mock.mock(json));
+        });
+
+        app.post('/api/wjlist',jsonParser,(req,res)=>{
+            var body=req.body;
+            console.log(body);
+            var json = getJsonFile('./wjlist.json5');
+            res.json(Mock.mock(json));
+        });
+        app.post('/api/questionlist',jsonParser,(req,res)=>{
+            var body=req.body;
+            console.log(body);
+            var json = getJsonFile('./questionlist.json5');
+            console.log(json);
+            res.json(Mock.mock(json));
+        });
+        app.post('/api/text_answer_detail',jsonParser,(req,res)=>{
+            var body=req.body;
+            console.log(body);
+            var json = getJsonFile('./text_answer_detail.json5');
+            console.log(json);
+            res.json(Mock.mock(json));
+        });
+        app.post('/api/data_analysis',jsonParser,(req,res)=>{
+            var body=req.body;
+            console.log(body);
+            var json = getJsonFile('./data_analysis.json5');
+            console.log(json);
+            res.json(Mock.mock(json));
+        });
+        
+
+    
     }
 }

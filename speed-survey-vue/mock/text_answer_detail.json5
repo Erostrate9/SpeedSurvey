@@ -1,0 +1,19 @@
+    // questionId=info.get('questionId')
+    // pageSize=info.get('pageSize',10)
+    // currentPage=info.get('currentPage',1)
+
+{
+    "data":{
+        detail:[
+            {'context': "@cname()"},
+            {'context': "@cname()"},
+            {'context': "@cname()"},
+            {'context': "@cname()"},
+            {'context': "@cname()"},
+            {'context': "@cname()"},
+        ],
+        total:6
+    },
+    msg:"success",
+    code:"0"
+}

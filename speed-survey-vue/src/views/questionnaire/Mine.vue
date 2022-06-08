@@ -8,6 +8,9 @@
       <el-col :span="6">
         <!--操作栏-->
         <div class="opera">
+          <!-- <el-tooltip class="item" effect="dark" content="测试" placement="bottom">
+            <el-button icon="el-icon-plus" type="text" class="rightButton" @click="testClick"></el-button>
+          </el-tooltip> -->
           <el-tooltip class="item" effect="dark" content="创建问卷" placement="bottom">
             <el-button icon="el-icon-plus" type="text" class="rightButton" @click="addWjButtonClick"></el-button>
           </el-tooltip>
@@ -64,10 +67,11 @@
                 <design ref="design" v-show="nowSelect.id!=0&&nowSelect.id!=null"></design>
               </div>
             </el-tab-pane>
+
             <el-tab-pane label="回答统计" name="hdtj">
               <div class="content" ref="pdf">
                 <div v-show="nowSelect.id==0||nowSelect.id==null">请先选择问卷</div>
-                <!-- <data-show ref="dataShow" v-show="nowSelect.id!=0&&nowSelect.id!=null"></data-show> -->
+                <data-show ref="dataShow" v-show="nowSelect.id!=0&&nowSelect.id!=null"></data-show>
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -132,18 +136,21 @@
 
   </div>
 </template>
+
 <script>
   import {designOpera} from './api'
   import Design from './Design.vue'
-  // import DataShow from './DataShow.vue'
+  import DataShow from './DataShow.vue'
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
-  // import QRCode from 'qrcode'
+  import axios from 'axios';
+  import QRCode from 'qrcode'
+
   export default{
     components:{
       ElButton,
       Design,
       // QRCode,
-      // DataShow,
+      DataShow,
     },
     data(){
       return{
@@ -316,8 +323,15 @@
       //生成二维码
       makeQrcode(){
         var canvas=document.getElementById('canvas');
-        console.log(canvas);
-        // QRCode.toCanvas(canvas,this.shareInfo.url);
+        // console.log(canvas);
+        // console.log(this.shareInfo.url);
+        QRCode.toCanvas(canvas,this.shareInfo.url,function(error){
+          if(error){
+            console.log(error);
+          }else{
+            console.log("qrcode successed!")
+          }
+        });
       },
       //复制分享链接成功
       copySuccess(e){
@@ -349,6 +363,14 @@
       editWj(){
         this.dialogShow=true;
         this.willAddWj=this.nowSelect;
+      },
+      testClick(){
+        axios.post("/api/wjlist", {
+          id:"123",
+          hid:'aaa',
+          list:[123,457]
+          })
+          .then(res => console.log(res));
       },
       //添加问卷按钮点击
       addWjButtonClick(){
@@ -398,17 +420,18 @@
       //获取问卷列表
       getWjList(){
         this.loading=true;
-        designOpera({
-          opera_type:'get_wj_list',
+        var that = this;
+        axios.post('/api/wjlist',{
           username:'test'
-        })
-          .then(data=>{
-            console.log(data);
-            this.wjList=data.data.detail;
-            this.loading=false;
-            //获取当前选中问卷题目
-            this.lookDetail();
           })
+          .then(data=>{
+            console.log("wjlist data",data);
+            that.wjList=data.data.data;
+            console.log("wjlist",that.wjList)
+            that.loading=false;
+            //获取当前选中问卷题目
+            that.lookDetail();
+            })
       },
       //删除问卷
       deleteWj(){
@@ -450,14 +473,16 @@
       },
       //查看问卷详情
       lookDetail(){
+        console.log("refs",this.$refs)
         this.$refs.design.init(this.nowSelect.id,this.nowSelect.title,this.nowSelect.desc);
-        console.log("id=")
-        console.log(this.nowSelect.id)
+        console.log("lookDetail id=",this.nowSelect.id)
+        console.log("lookDeatil refs.dataShow",this.$refs.dataShow);
         this.$refs.dataShow.dataAnalysis(this.nowSelect.id);
       },
     }
   }
 </script>
+
 <style scoped>
   .home{
     position: absolute;
