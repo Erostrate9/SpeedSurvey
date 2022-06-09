@@ -71,6 +71,9 @@
         <el-form-item label="是否必填" style="width: 100%;">
           <el-checkbox v-model="willAddQuestion.must">必填</el-checkbox>
         </el-form-item>
+        <el-form-item label="是否隐私" style="width: 100%;">
+          <el-checkbox v-model="willAddQuestion.isPrivate">隐私</el-checkbox>
+        </el-form-item>
         <el-form-item label="题目标题" style="width: 100%;">
           <el-input v-model="willAddQuestion.title" placeholder="请输入标题" ></el-input>
         </el-form-item>
@@ -289,6 +292,7 @@ import {designOpera} from './api'
               options:[''],
               row:1,
               must:false,
+              isPrivate:false
             };
           });
       },

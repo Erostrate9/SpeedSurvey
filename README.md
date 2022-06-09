@@ -195,13 +195,14 @@ authority：0-普通用户，1-高级用户，2-管理员
 
 ### organization
 
-| 序号 | 字段名称    | 注释     | 必填 | 数据类型     | 主键唯一 |
-| ---- | ----------- | -------- | ---- | ------------ | -------- |
-| 1    | id          | 组织id   | 是   | int(11)      | 是       |
-| 2    | name        | 组织名称 | 是   | varchar(50)  |          |
-| 3    | description | 组织描述 |      | varchar(255) |          |
-| 4    | logo        | 组织标志 |      | varchar(255) |          |
-| 5    | invite_code | 邀请码   |      | varchar(50)  |          |
+| 序号 | 字段名称    | 注释                     | 必填 | 数据类型     | 主键唯一 |
+| ---- | ----------- | ------------------------ | ---- | ------------ | -------- |
+| 1    | id          | 组织id                   | 是   | int(11)      | 是       |
+| 2    | name        | 组织名称                 | 是   | varchar(50)  |          |
+| 3    | description | 组织描述                 |      | varchar(255) |          |
+| 4    | logo        | 组织标志                 |      | varchar(255) |          |
+| 5    | invite_code | 邀请码                   |      | varchar(50)  |          |
+| 6    | owner_id    | 组织创建者，user表外键id | 是   | int(11)      |          |
 
 ### user_organization
 
@@ -228,22 +229,181 @@ authority：0-普通用户，1-高级用户，2-管理员
 
 ## 接口规范
 
-### getWjList
+### org_list
 
-获取问卷列表
+| 接口地址            | HTTP方法 | 传入参数              | 返回参数类型 | 功能                       |
+| ------------------- | -------- | --------------------- | ------------ | -------------------------- |
+| /api/org/owner/list | GET      | 从session中获取userId | json         | 获取用户**创建**的所有组织 |
 
-data:{
+返回数据格式
 
-detail:[[{
-
-id: ,
-
-title:,
-
-desc:,
-
-status:,
-
-}]]
-
+```json
+//获取所有owner_id为session中用户id的组织
+//orgId:orgnization表的id
+//orgName:orgnization表的name
+//msg:返回提示信息
+//code: 0为成功，500为失败
+{
+    data:[
+        {
+            orgId:"@id()",
+            orgName:"@cname()的组织",
+        },
+        {
+            orgId:"@id()",
+            orgName:"@cname()的组织",
+        },
+        {
+            orgId:"@id()",
+            orgName:"@cname()的组织",
+        },
+    ],
+    msg: '',
+    code: '0'
 }
+```
+
+### wj_list
+
+| 接口地址                        | HTTP方法 | 传入参数              | 返回参数类型 | 功能                       |
+| ------------------------------- | -------- | --------------------- | ------------ | -------------------------- |
+| /api/questionnaire/creater/list | GET      | 从session中获取userId | json         | 获取用户**创建**的所有问卷 |
+
+返回数据格式
+
+```json
+//获取questionnaire表中所有user_id为session中用户id的组织
+//id:questionnaire表的id
+//title:questionnaire表的name
+//desc:questionnaire表的description
+//status:questionnaire表的state
+//msg:返回提示信息
+//code: 0为成功，500为失败
+{
+    "data":[
+        {
+            "id": "@id()",
+            "title": "@cname",
+            "desc":"@cname",
+            "status":"@integer(0, 1)"
+        },
+        {
+            "id": "@id()",
+            "title": "@cname",
+            "desc":"@cname",
+            "status":"@integer(0, 1)"
+        },
+        {
+            "id": "@id()",
+            "title": "@cname",
+            "desc":"@cname",
+            "status":"@integer(0, 1)"
+        },
+    ],
+    msg:"",
+    code:"0"
+}
+```
+
+### question_list
+
+| 接口地址                   | HTTP方法 | 传入参数 | 返回参数类型 | 功能                   |
+| -------------------------- | -------- | -------- | ------------ | ---------------------- |
+| /api/question/creater/list | GET      | wjId     | json         | 获取某一问卷的所有问题 |
+
+传入参数
+
+| 参数名 | 参数类型 | 说明   |      |
+| ------ | -------- | ------ | ---- |
+| wjId   | int      | 问卷id |      |
+
+返回数据格式
+
+```json
+//需要进行权限验证,session应为问卷创建者
+//获取question表中所有questionnaire_id为wjId的问题
+//id:	question表的id
+//title:	question表的title
+//type:	0填空/1单选/2多选
+//row:	options的数量，最小为1
+//must:	question表的is_required
+//isPrivate:	question表的is_private
+//options:	选择题的所有选项，填空题此处为空[]
+//'radioValue': -1 ,//接收单选框的值
+//'checkboxValue' : [] ,//接收多选框的值
+//'textValue' : '',//接收输入框的值
+//msg:返回提示信息
+//code: 0为成功，500为失败
+{
+    data:[
+        {
+            title:"单选题",
+            type:1,
+            id:"@id()",
+            row:4,
+            must:"@boolean()",
+            options:[
+                {
+                    title:"@cname()",//option表的content
+                    id:"@id()"//option表的id
+                },
+                {
+                    title:"@cname()",
+                    id:"@id()"
+                },
+                {
+                    title:"@cname()",
+                    id:"@id()"
+                },
+                {
+                    title:"@cname()",
+                    id:"@id()"
+                }
+            ],
+            'radioValue': -1 ,//接收单选框的值
+            'checkboxValue' : [] ,//接收多选框的值
+            'textValue' : '',//接收输入框的值
+        },
+        {
+            title:"多选题",
+            type:2,
+            id:"@id()",
+            row:3,
+            must:"@boolean()",
+            options:[
+                {
+                    title:"@cname()",
+                    id:"@id()"
+                },
+                {
+                    title:"@cname()",
+                    id:"@id()"
+                },
+                {
+                    title:"@cname()",
+                    id:"@id()"
+                }
+            ],
+            'radioValue' : -1 ,//接收单选框的值
+            'checkboxValue' : [] ,//接收多选框的值
+            'textValue' : '',//接收输入框的值
+            
+        },
+        {
+            title:"填空题",
+            type:0,
+            id:"@id()",
+            row:"@integer(1,3)",
+            must:"@boolean()",
+            options:[],
+            'radioValue' : -1,//接收单选框的值
+            'checkboxValue' : [], //接收多选框的值
+            'textValue' : '',//接收输入框的值
+            
+        }
+    ],
+    msg:"success",
+    code:"0"
+}
+```
+

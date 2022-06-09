@@ -48,21 +48,28 @@ module.exports = function(app){
             var body=req.body;
             console.log(body);
             var json = getJsonFile('./questionlist.json5');
-            console.log(json);
+            // console.log(json);
             res.json(Mock.mock(json));
         });
         app.post('/api/text_answer_detail',jsonParser,(req,res)=>{
             var body=req.body;
             console.log(body);
             var json = getJsonFile('./text_answer_detail.json5');
-            console.log(json);
+            // console.log(json);
             res.json(Mock.mock(json));
         });
         app.post('/api/data_analysis',jsonParser,(req,res)=>{
             var body=req.body;
             console.log(body);
             var json = getJsonFile('./data_analysis.json5');
-            console.log(json);
+            // console.log(json);
+            res.json(Mock.mock(json));
+        });
+        app.post('/api/org_list',(req,res)=>{
+            // console.log("getOrgList body",req.body);
+            console.log("getOrgList query",req.query);
+            var json = getJsonFile('./org_list.json5');
+            // console.log(json);
             res.json(Mock.mock(json));
         });
         

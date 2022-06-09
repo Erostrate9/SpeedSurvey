@@ -87,6 +87,15 @@
         <el-form-item label="问卷描述" style="width: 100%;">
           <el-input v-model="willAddWj.desc" type="textarea" placeholder="请输入问卷描述" rows="5"></el-input>
         </el-form-item>
+        <el-form-item label="发布组织" c>
+          <el-select v-model="willAddWj.org" placeholder="请选择发布组织" >
+            <el-option label="不发布到组织" value="" ></el-option>
+            <el-option v-for="(item,index) in orgList" :key="index" :label="item.orgName" :value="item.orgId"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="IP限制" style="width: 100%;">
+          <el-switch v-model="willAddWj.ipRestrict"></el-switch>
+        </el-form-item>
       </el-form>
       <div style="width: 100%;text-align: right">
         <el-button style="margin-left: 10px;" @click="openTemp">从模板库创建</el-button>
@@ -171,16 +180,24 @@
           title:'',
           flag:0,
           desc:'感谢您能抽时间参与本次问卷，您的意见和建议就是我们前行的动力！',
+          ipRestrict:false,
+          org:0
         },
         shareInfo:{
           url:'',
         },
+        orgList:[
+          {
+            id:'0',
+            title:''
+          }
+        ]
 
       }
     },
     mounted(){
       this.logincheck();
-
+      this.getOrgList();
     },
     computed:{
       //现在选中的问卷信息
@@ -280,6 +297,22 @@
           }
         })
       },
+      //拉取该用户创建的所有组织
+      getOrgList(){
+        const that =this;
+        axios({
+          method: 'post',
+          url: '/api/org_list',
+          params:{
+            userId:"123"
+          }
+        })
+        .then(data=>{
+          console.log("getOrgList data.data.data",data.data.data)
+          that.orgList=data.data.data;
+        })
+
+      },
       //发布问卷/暂停问卷
       pushWj(){
         let status=1;
@@ -363,14 +396,22 @@
       editWj(){
         this.dialogShow=true;
         this.willAddWj=this.nowSelect;
+        this.getOrgList();
       },
       testClick(){
-        axios.post("/api/wjlist", {
-          id:"123",
-          hid:'aaa',
-          list:[123,457]
-          })
-          .then(res => console.log(res));
+        axios.Axios({
+          method: 'post',
+          url: '/api/org_list',
+          params:{
+            userId:"123"
+          }
+        })
+        // axios.post("/api/wjlist", {
+        //   id:"123",
+        //   hid:'aaa',
+        //   list:[123,457]
+        //   })
+        //   .then(res => console.log(res));
       },
       //添加问卷按钮点击
       addWjButtonClick(){
@@ -380,7 +421,10 @@
           title:'',
           flag:0,
           desc:'感谢您能抽时间参与本次问卷，您的意见和建议就是我们前行的动力！',
+          ipRestrict:false,
+          org:0
         };
+        this.getOrgList();
       },
       //添加问卷
       addWj(){
@@ -420,7 +464,7 @@
       //获取问卷列表
       getWjList(){
         this.loading=true;
-        var that = this;
+        const that = this;
         axios.post('/api/wjlist',{
           username:'test'
           })
