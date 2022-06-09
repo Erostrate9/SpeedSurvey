@@ -176,9 +176,10 @@
         //     this.detail=data.detail;
         //     this.loading=false;
         //   })
-        axios.post('/api/questionlist',{
-          username:'test',
-          wjId:that.wjId
+        axios({
+          method:"get",
+          url:'/api/questionnaire/queryDetail',
+          params:{wjId:that.wjId}
         })
         .then(data=>{
           that.detail=data.data.data;

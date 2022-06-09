@@ -20,6 +20,7 @@ import 'ant-design-vue/dist/antd.css';
 import { notification } from 'ant-design-vue'
 import { message } from 'ant-design-vue'
 import './plugins/element.js'
+import {Message} from 'element-ui';
 
 Vue.use(VueClipboard);
 Vue.use(ElementUI);
@@ -45,7 +46,8 @@ Vue.config.productionTip = false
 // Vue.use(Select)
 // Vue.use(Progress)
 // Vue.use(Result)
-
+Vue.use(Message);
+Vue.prototype.$messageE = Message;
 
 Vue.prototype.$notification = notification
 Vue.prototype.$message = message

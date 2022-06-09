@@ -152,7 +152,7 @@
   import DataShow from './DataShow.vue'
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
   import axios from 'axios';
-  import QRCode from 'qrcode'
+  import QRCode from 'qrcode';
 
   export default{
     components:{
@@ -291,7 +291,7 @@
         .then(data=>{
           console.log(data);
           if(data.code==500){//如果返回的错误是404，跳转到登录页面
-            that.$message({
+            that.$messageE({
               type: 'error',
               message: '您还未登录，请登录',
               showClose: true
@@ -341,14 +341,14 @@
           .then(data=>{
             console.log(data);
             if(data.code==0){
-              that.$message({
+              that.$messageE({
                 type: 'success',
                 message: status==1?'问卷发布成功！':'问卷暂停成功！'
               });
               that.getWjList();
             }
             else{
-              that.$message({
+              that.$messageE({
                 type: 'error',
                 message: data.msg
               });
@@ -358,7 +358,7 @@
       //分享问卷
       shareWj(){
         if(this.nowSelect.status==0){//问卷未发布
-          this.$message({
+          this.$messageE({
             type: 'error',
             message: '请先发布问卷能分享！'
           });
@@ -413,7 +413,7 @@
         this.getOrgList();
       },
       testClick(){
-        axios.Axios({
+        axios({
           method: 'post',
           url: '/api/org_list',
           params:{
@@ -489,9 +489,7 @@
       getWjList(){
         this.loading=true;
         const that = this;
-        axios.post('/api/wjlist',{
-          username:'test'
-          })
+        axios.get('/api/questionnaire/query')
           .then(data=>{
             console.log("wjlist data",data);
             that.wjList=data.data.data;
@@ -525,7 +523,7 @@
         const that = this;
         axios({
           method: 'post',
-          url: '/api/delete_wj',
+          url: '/api/questionnaire/delete',
           params:{
             wjId:that.nowSelect.id
           }

@@ -38,40 +38,45 @@ module.exports = function(app){
             res.json(Mock.mock(json));
         });
 
-        app.post('/api/wjlist',jsonParser,(req,res)=>{
-            var body=req.body;
-            console.log(body);
+        app.get('/api/questionnaire/query',jsonParser,(req,res)=>{
+            // var body=req.body;
+            console.log("wj_list",req.query);
             var json = getJsonFile('./wjlist.json5');
             res.json(Mock.mock(json));
         });
-        app.post('/api/questionlist',jsonParser,(req,res)=>{
-            var body=req.body;
-            console.log(body);
+        app.get('/api/questionnaire/queryDetail',jsonParser,(req,res)=>{
+            // var body=req.body;
+            console.log("question_list",req.query);
             var json = getJsonFile('./questionlist.json5');
             // console.log(json);
             res.json(Mock.mock(json));
         });
-        app.post('/api/text_answer_detail',jsonParser,(req,res)=>{
+        app.get('/api/text_result/list',jsonParser,(req,res)=>{
             var body=req.body;
             console.log(body);
             var json = getJsonFile('./text_answer_detail.json5');
             // console.log(json);
             res.json(Mock.mock(json));
         });
-        app.post('/api/data_analysis',jsonParser,(req,res)=>{
+        app.get('/api/data_analysis',jsonParser,(req,res)=>{
             var body=req.body;
             console.log(body);
             var json = getJsonFile('./data_analysis.json5');
             // console.log(json);
             res.json(Mock.mock(json));
         });
-        app.post('/api/org_list',(req,res)=>{
+        app.get('/api/org_list',(req,res)=>{
             // console.log("getOrgList body",req.body);
             console.log("getOrgList query",req.query);
             var json = getJsonFile('./org_list.json5');
             // console.log(json);
             res.json(Mock.mock(json));
         });
+        app.get('/api/logincheck',(req,res)=>{
+            var json = getJsonFile('./logincheck.json5');
+            // console.log(json);
+            res.json(Mock.mock(json));
+        })
         
 
     

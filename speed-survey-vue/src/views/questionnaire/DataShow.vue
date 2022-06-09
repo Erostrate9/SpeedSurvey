@@ -230,10 +230,14 @@ export default {
       //   this.total = data.total;
       // });
       const that = this;
-      axios.post('/api/text_answer_detail',{
-        questionId:that.questionId,
-        currentPage: that.currentPage,
-        pageSize: that.pageSize
+      axios({
+        method:"get",
+        url:'/api/text_result/list',
+        params:{
+          questionId:that.questionId,
+          currentPage: that.currentPage,
+          pageSize: that.pageSize
+        }
       })
       .then(data=>{
         console.log("getTableData:",data.data.data);
@@ -291,8 +295,10 @@ export default {
       //   this.loading = false;
       // });
       const that = this;
-      axios.post('/api/data_analysis',{
-        wjId: id
+      axios({
+        method:"get",
+        url:'/api/data_analysis',
+        params:{wjId: id}
       })
       .then(data=>{
         console.log(data.data.data);
