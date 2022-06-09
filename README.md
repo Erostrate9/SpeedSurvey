@@ -573,7 +573,7 @@ authority：0-普通用户，1-高级用户，2-管理员
 
 **返回数据格式**
 
-```json
+```json5
 {
     data:''
     msg:"已登录",
@@ -732,4 +732,56 @@ POST提交json，在payload里
 }
 ```
 
-### 
+### add_question
+
+| 接口地址          | HTTP方法 | 传入参数类型 | 返回参数类型 | 功能               |
+| ----------------- | -------- | ------------ | ------------ | ------------------ |
+| /api/add_question | POST     | json         | json         | 添加或更新某一问题 |
+
+**说明**
+
+POST提交json，在payload里
+
+从session中获取用户id
+
+若成功返回0，失败返回500
+
+**传入数据格式**
+
+```json5
+{
+          wjId:1,//问卷id
+          questionId:1,//问题id
+          title:'aaa',//question表title
+          type:that.willAddQuestion.type,//question表type
+          options:[{
+              title:'aaa',//选项标题
+              id:1//选项id
+            },
+            {
+              title:'bbb',//option表content
+              id:2//option表id
+            }],
+          isRequired:true,//true或false。
+          isPrivate:false//true或false
+}
+```
+
+**返回数据格式**
+
+```json
+{
+    data:{
+        id:3//返回修改/新增问题的id
+    }
+    msg:"问题创建/修改成功",
+    code:"0"
+}
+
+{
+    data:''
+    msg:"问题创建/修改失败",
+    code:"500"
+}
+```
+

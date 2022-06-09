@@ -113,7 +113,7 @@
 </template>
 <script>
   import axios from 'axios';
-import {designOpera} from './api'
+// import {designOpera} from './api'
   export default{
     data(){
       return{
@@ -207,6 +207,7 @@ import {designOpera} from './api'
           ],
           row:1,
           must:false,//是否必填
+          isPrivate:false//是否隐私
         };
         this.dialogShow=true;
       },
@@ -252,48 +253,49 @@ import {designOpera} from './api'
       //确认添加/保存题目
       checkAddQuestion(){
         //添加保存问题
-        let newItem={};//新添加的问题对象
-        newItem={
-          type:this.willAddQuestion.type,
-          title:this.willAddQuestion.title,
-          options:this.willAddQuestion.options,
-          row:this.willAddQuestion.row,
-          must:this.willAddQuestion.must,
-        };
-        newItem.radioValue=-1;
-        newItem.checkboxValue=[];
-        newItem.textValue='';
-        designOpera({
-          opera_type:'add_question',
-          username:'test',
-          wjId:this.wjId,
-          questionId:this.willAddQuestion.id,
-          title:this.willAddQuestion.title,
-          type:this.willAddQuestion.type,
-          options:this.willAddQuestion.options,
-          row:this.willAddQuestion.row,
-          must:this.willAddQuestion.must,
-
+        this.willAddQuestion.radioValue=-1;
+        this.willAddQuestion.checkboxValue=[];
+        this.willAddQuestion.textValue='';
+        const that = this;
+        // designOpera({
+        //   opera_type:'add_question',
+        //   username:'test',
+        //   wjId:this.wjId,
+        //   questionId:this.willAddQuestion.id,
+        //   title:this.willAddQuestion.title,
+        //   type:this.willAddQuestion.type,
+        //   options:this.willAddQuestion.options,
+        //   row:this.willAddQuestion.row,
+        //   must:this.willAddQuestion.must,
+        // })
+        axios.post('/api/',{
+          wjId:that.wjId,
+          questionId:that.willAddQuestion.id,
+          title:that.willAddQuestion.title,
+          type:that.willAddQuestion.type,
+          options:that.willAddQuestion.options,
+          isRequired:that.willAddQuestion.must,
+          isPrivate:that.willAddQuestion.isPrivate
         })
           .then(data=>{
             console.log(data);
-            newItem.id=data.id;
+            that.willAddQuestion.id=data.data.id;
             if(data.code==0){
-              this.dialogShow=false;
-              this.$message({
+              that.dialogShow=false;
+              that.$message({
                 type: 'success',
                 message: '保存成功!'
               });
-              this.getQuestionList();
+              that.getQuestionList();
             }
             else{
-              this.dialogShow=false;
-              this.$message({
+              that.dialogShow=false;
+              that.$message({
                 type: 'error',
                 message: data.msg
               });
             }
-            this.willAddQuestion={
+            that.willAddQuestion={
               id:0,
               type:'',
               title:'',
