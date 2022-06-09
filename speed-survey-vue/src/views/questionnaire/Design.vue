@@ -217,22 +217,30 @@ import {designOpera} from './api'
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          designOpera({
-            opera_type:'delete_question',
-            username:'test',
-            questionId:this.detail[index].id,
+          const that = this;
+          // designOpera({
+          //   opera_type:'delete_question',
+          //   username:'test',
+          //   questionId:this.detail[index].id,
+          // })
+          axios({
+            url:"/api/del_question",
+            method: 'get',
+            params:{
+              id:that.detail[index].id,
+            }
           })
             .then(data=>{
               console.log(data);
               if(data.code==0){
-                this.detail.splice(index,1);
-                this.$message({
+                that.detail.splice(index,1);
+                that.$message({
                   type: 'success',
                   message: '删除成功!'
                 });
               }
               else{
-                this.$message({
+                that.$message({
                   type: 'error',
                   message: data.msg
                 });
