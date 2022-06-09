@@ -407,3 +407,112 @@ authority：0-普通用户，1-高级用户，2-管理员
 }
 ```
 
+### data_analysis
+
+| 接口地址           | HTTP方法 | 传入参数 | 返回参数类型 | 功能                             |
+| ------------------ | -------- | -------- | ------------ | -------------------------------- |
+| /api/data_analysis | GET      | wjId     | json         | 获取某一问卷的所有问题的统计结果 |
+
+传入参数
+
+| 参数名 | 参数类型 | 说明   | 对应字段          |
+| ------ | -------- | ------ | ----------------- |
+| wjId   | int      | 问卷id | questionnaire表id |
+
+返回数据格式
+
+```json
+//获取question表中所有questionnaire_id为wjId的问题的统计结果
+
+{
+    data:[
+        {
+        "title": "@ctitle()",//question表title
+        "type": "1",//question表type,0填空/1单选/2多选
+        "questionId":"@id()",//question表id
+        result:[
+            {
+                'option':"@ctitle()",//option表content
+                'count':"@integer(0,100)",//option表count
+                'percent':"@integer(0,100)%"//占该问题所有选项count之和的百分比
+            },
+            {
+                'option':"@ctitle()",
+                'count':"@integer(0,100)",
+                'percent':"@integer(0,100)%"
+            }
+        ]
+        },
+        {
+        "title": "@ctitle()",
+        "type": "checkbox",
+        result:[
+            {
+                'option':"@ctitle()",
+                'count':"@integer(0,100)",
+                'percent':"@integer(0,100)%"
+            },
+            {
+                'option':"@ctitle()",
+                'count':"@integer(0,100)",
+                'percent':"@integer(0,100)%"
+            }
+        ],
+        "questionId":"@id()"
+        },
+        {
+        "title": "@ctitle()",
+        "type": 0,
+        result:'',//填空题的result返回空
+        "questionId":"@id()"
+        },
+
+    ],
+    msg: '',
+    code: '0'
+}
+```
+
+### text_answer_detail
+
+| 接口地址         | HTTP方法 | 传入参数 | 返回参数类型 | 功能                     |
+| ---------------- | -------- | -------- | ------------ | ------------------------ |
+| /api/text_result | GET      | wjId     | json         | 获取某一填空题所有的答案 |
+
+**说明**
+
+由于前端需要分页功能，后端要实现分页，按id排序，每页有pageSize项。
+
+必须验证权限，session与问卷创建者id一致才能返回数据。
+
+**传入参数**
+
+| 参数名      | 参数类型 | 说明       | 对应字段          |
+| ----------- | -------- | ---------- | ----------------- |
+| questionId  | int      | 问卷id     | questionnaire表id |
+| currentPage | int      | 当前页数   |                   |
+| pageSize    | int      | 每页的容量 |                   |
+|             |          |            |                   |
+
+**返回数据格式**
+
+```json
+//context:text_result表中的answer
+//total:detail的length
+{
+    "data":{
+        detail:[
+            {'context': "@cname()"},
+            {'context': "@cname()"},
+            {'context': "@cname()"},
+            {'context': "@cname()"},
+            {'context': "@cname()"},
+            {'context': "@cname()"},
+        ],
+        total:6
+    },
+    msg:"success",
+    code:"0"
+}
+```
+
