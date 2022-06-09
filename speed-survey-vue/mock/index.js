@@ -108,5 +108,7 @@ module.exports = function(app){
             res.json(Mock.mock(json));
         });
     
+    }else{
+        
     }
 }

@@ -178,7 +178,7 @@
         //   })
         axios({
           method:"get",
-          url:'/api/questionnaire/queryDetail',
+          url:'/api/question/creater/list',
           params:{wjId:that.wjId}
         })
         .then(data=>{
@@ -269,7 +269,7 @@
         //   row:this.willAddQuestion.row,
         //   must:this.willAddQuestion.must,
         // })
-        axios.post('/api/question/add',{
+        var item={
           wjId:that.wjId,
           questionId:that.willAddQuestion.id,
           title:that.willAddQuestion.title,
@@ -277,7 +277,9 @@
           options:that.willAddQuestion.options,
           isRequired:that.willAddQuestion.must,
           isPrivate:that.willAddQuestion.isPrivate
-        })
+        };
+        console.log(item);
+        axios.post('/api/question/add',item)
           .then(data=>{
             // console.log("add_question data.data",data.data);
             that.willAddQuestion.id=data.data.id;

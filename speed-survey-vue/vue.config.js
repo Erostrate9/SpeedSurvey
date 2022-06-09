@@ -12,8 +12,8 @@ module.exports = defineConfig({
     }
   },
   // 配置代理
-  // proxy: 'http://localhost:5000',
   devServer:{
+    proxy: 'http://localhost:5000',
     onBeforeSetupMiddleware: function (devServer) {
       if (!devServer) {
         throw new Error('webpack-dev-server is not defined');

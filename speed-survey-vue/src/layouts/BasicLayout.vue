@@ -13,7 +13,7 @@
   >
     <template v-slot:menuHeaderRender>
       <div>
-        <img src="../assets/logo.svg" />
+        <img src="/logo.svg" />
         <h1>速填</h1>
       </div>
     </template>
@@ -32,7 +32,7 @@
               shape="square"
               slot="avatar"
               :size="32"
-              src="../assets/logo.svg"
+              src="/logo.svg"
             ></a-avatar>
             <span style="margin-left: 8px">yangjiao</span>
           </span>

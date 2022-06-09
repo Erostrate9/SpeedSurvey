@@ -412,12 +412,14 @@
         this.getOrgList();
       },
       testClick(){
-        axios({
-          method: 'post',
-          url: '/api/org_list',
-          params:{
-            userId:"123"
+        axios.get('http://47.110.133.7:8889/api/org/owner/list?ownerId=2',{
+          headers: {
+            "Content-Type": "application/octet-stream",
+            "Access-Control-Allow-Origin": "*",
           }
+        })
+        .then(data=>{
+          console.log("test data:",data);
         })
         // axios.post("/api/wjlist", {
         //   id:"123",
@@ -458,7 +460,7 @@
         //   ipRestrict:this.willAddWj.ipRestrict,
         //   org:this.willAddWj.org
         // })
-        axios.post('/api/addwj',{
+        axios.post('/api/questionnaire/add',{
           title:that.willAddWj.title,
           id:that.willAddWj.id,
           desc:that.willAddWj.desc,
@@ -467,7 +469,7 @@
         })
           .then(data=>{
             // console.log("add wj data",data);
-            // console.log("addwj data.data",data.data);
+            console.log("addwj data.data",data.data);
             if(data.data.code==0){
               that.$messageE({
                 type: 'success',
@@ -489,7 +491,7 @@
       getWjList(){
         this.loading=true;
         const that = this;
-        axios.get('/api/questionnaire/query')
+        axios.get('/api/questionnaire/creater/list')
           .then(data=>{
             // console.log("wjlist data",data);
             that.wjList=data.data.data;

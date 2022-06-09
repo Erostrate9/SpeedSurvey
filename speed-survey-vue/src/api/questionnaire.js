@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
 const questionnaireApi = {
-    GetAllInPublic: '/questionnaire/queryAllInPublic',
-    GetDetail: '/questionnaire/queryDetail'
+    GetAllInPublic: '/api/questionnaire/queryAllInPublic',
+    GetDetail: '/api/questionnaire/queryDetail'
 }
 
 export function getAllInPublic() {

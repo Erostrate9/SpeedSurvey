@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
 const userApi = {
-  Login: '/user/login',
-  Register: '/user/register',
-  GetCaptcha: '/mail/getCaptcha',
+  Login: '/api/user/login',
+  Register: '/api/user/register',
+  GetCaptcha: '/api/mail/getCaptcha',
 
   // Logout: '/user/logout',
   // UserInfo: '/user/info',

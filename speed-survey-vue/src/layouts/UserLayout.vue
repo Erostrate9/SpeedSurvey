@@ -7,7 +7,7 @@
           <div class="header">
             <a href="/">
               <img
-                src="../assets/logo.svg"
+                src="/logo.svg"
                 class="logo"
                 alt="logo"
               />
