@@ -226,7 +226,7 @@
           //   questionId:this.detail[index].id,
           // })
           axios({
-            url:"/api/del_question",
+            url:"/api/question/delete",
             method: 'get',
             params:{
               id:that.detail[index].id,
@@ -269,7 +269,7 @@
         //   row:this.willAddQuestion.row,
         //   must:this.willAddQuestion.must,
         // })
-        axios.post('/api/add_question',{
+        axios.post('/api/question/add',{
           wjId:that.wjId,
           questionId:that.willAddQuestion.id,
           title:that.willAddQuestion.title,

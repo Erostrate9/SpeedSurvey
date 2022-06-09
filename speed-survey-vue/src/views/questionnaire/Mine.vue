@@ -286,7 +286,7 @@
         // })
         axios({
           method: 'get',
-          url: '/api/logincheck',
+          url: '/api/user/logincheck',
         })
         .then(data=>{
           // console.log("logincheck data.data",data.data);
@@ -330,7 +330,7 @@
         // })
         axios({
           method: 'post',
-          url: '/api/push_wj',
+          url: '/api/questionnaire/push',
           params:{
             wjId:that.nowSelect.id,
             status:status

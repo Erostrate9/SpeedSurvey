@@ -72,7 +72,7 @@ module.exports = function(app){
             // console.log(json);
             res.json(Mock.mock(json));
         });
-        app.get('/api/logincheck',(req,res)=>{
+        app.get('/api/user/logincheck',(req,res)=>{
             var json = getJsonFile('./logincheck.json5');
             // console.log(json);
             res.json(Mock.mock(json));
@@ -83,7 +83,7 @@ module.exports = function(app){
             // console.log(json);
             res.json(Mock.mock(json));
         });
-        app.post('/api/push_wj',(req,res)=>{
+        app.post('/api/questionnaire/push',(req,res)=>{
             // console.log("push_wj query:",req.query);
             var json = getJsonFile('./push_wj_success.json5');
             // console.log(json);
@@ -95,13 +95,13 @@ module.exports = function(app){
             // console.log(json);
             res.json(Mock.mock(json));
         });
-        app.get('/api/del_question',(req,res)=>{
+        app.get('/api/question/delete',(req,res)=>{
             // console.log("del_question query:",req.query);
             var json = getJsonFile('./delete_question_success.json5');
             // console.log(json);
             res.json(Mock.mock(json));
         });
-        app.post('/api/add_question',jsonParser,(req,res)=>{
+        app.post('/api/question/add',jsonParser,(req,res)=>{
             // console.log("add_question body:",req.body);
             var json = getJsonFile('./add_question_success.json5');
             // console.log(json);

@@ -744,6 +744,8 @@ POST提交json，在payload里
 
 从session中获取用户id
 
+若questionId为0则是添加，若questionId为已存在问题id则更新。
+
 若成功返回0，失败返回500
 
 **传入数据格式**
