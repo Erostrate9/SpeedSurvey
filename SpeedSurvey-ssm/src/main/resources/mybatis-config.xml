@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.yangjiao.domain.Option" alias="option"/>
+        <typeAlias type="com.yangjiao.domain.OptionResult" alias="optionResult"/>
+        <typeAlias type="com.yangjiao.domain.User" alias="user"/>
+        <typeAlias type="com.yangjiao.domain.Question" alias="question"/>
+        <typeAlias type="com.yangjiao.domain.Questionnaire" alias="questionnaire"/>
+        <typeAlias type="com.yangjiao.domain.TextResult" alias="textResult"/>
+        <typeAlias type="com.yangjiao.domain.Organization" alias="organization"/>
+
+    </typeAliases>
+</configuration>
