@@ -189,7 +189,7 @@
       //点击添加问题按钮
       addQuestion(){
         if(this.wjId==0||this.wjId==null){
-          this.$message({
+          this.$messageE({
             type: 'error',
             message: '清先创建问卷!'
           });
@@ -214,7 +214,7 @@
       },
       //删除问题
       deleteQuestion(index){
-        this.$confirm('确定删除此题目?', '提示', {
+        this.$confirmE('确定删除此题目?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -233,18 +233,18 @@
             }
           })
             .then(data=>{
-              console.log(data);
-              if(data.code==0){
+              // console.log("del_question data.data",data.data);
+              if(data.data.code==0){
                 that.detail.splice(index,1);
-                that.$message({
+                that.$messageE({
                   type: 'success',
                   message: '删除成功!'
                 });
               }
               else{
-                that.$message({
+                that.$messageE({
                   type: 'error',
-                  message: data.msg
+                  message: data.data.msg
                 });
               }
             })
@@ -269,7 +269,7 @@
         //   row:this.willAddQuestion.row,
         //   must:this.willAddQuestion.must,
         // })
-        axios.post('/api/',{
+        axios.post('/api/add_question',{
           wjId:that.wjId,
           questionId:that.willAddQuestion.id,
           title:that.willAddQuestion.title,
@@ -279,11 +279,11 @@
           isPrivate:that.willAddQuestion.isPrivate
         })
           .then(data=>{
-            console.log(data);
+            // console.log("add_question data.data",data.data);
             that.willAddQuestion.id=data.data.id;
-            if(data.code==0){
+            if(data.data.code==0){
               that.dialogShow=false;
-              that.$message({
+              that.$messageE({
                 type: 'success',
                 message: '保存成功!'
               });
@@ -291,9 +291,9 @@
             }
             else{
               that.dialogShow=false;
-              that.$message({
+              that.$messageE({
                 type: 'error',
-                message: data.msg
+                message: data.data.msg
               });
             }
             that.willAddQuestion={

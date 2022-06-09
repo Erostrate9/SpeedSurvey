@@ -241,7 +241,7 @@
           .then(data=>{
             console.log(data);
             this.tempLoading=false;
-            this.$message({
+            this.$messageE({
               type: 'success',
               message: '使用模板成功！',
               showClose: true
@@ -289,8 +289,11 @@
           url: '/api/logincheck',
         })
         .then(data=>{
-          console.log(data);
-          if(data.code==500){//如果返回的错误是404，跳转到登录页面
+          // console.log("logincheck data.data",data.data);
+          // console.log("logincheck data",data);
+          if(data.data.code==0){
+            that.getWjList();
+          }else{//如果返回的错误是，跳转到登录页面
             that.$messageE({
               type: 'error',
               message: '您还未登录，请登录',
@@ -298,20 +301,14 @@
             });
             that.$router.push({path:'/user/login'})
           }
-          else{
-            that.getWjList();
-          }
         })
       },
       //拉取该用户创建的所有组织
       getOrgList(){
         const that =this;
         axios({
-          method: 'post',
-          url: '/api/org_list',
-          params:{
-            userId:"123"
-          }
+          method: 'get',
+          url: '/api/org/owner/list'
         })
         .then(data=>{
           console.log("getOrgList data.data.data",data.data.data)
@@ -333,14 +330,16 @@
         // })
         axios({
           method: 'post',
-          url: '/api/org_list',
+          url: '/api/push_wj',
           params:{
+            wjId:that.nowSelect.id,
             status:status
           }
         })
           .then(data=>{
-            console.log(data);
-            if(data.code==0){
+            // console.log("push_wj data",data);
+            // console.log("push_wj data.data",data.data);
+            if(data.data.code==0){
               that.$messageE({
                 type: 'success',
                 message: status==1?'问卷发布成功！':'问卷暂停成功！'
@@ -383,7 +382,7 @@
       //复制分享链接成功
       copySuccess(e){
         console.log(e);
-        this.$message({
+        this.$messageE({
           type: 'success',
           message: '已复制链接到剪切板'
         });
@@ -391,7 +390,7 @@
       //复制分享链接失败
       copyError(e){
         console.log(e);
-        this.$message({
+        this.$messageE({
           type: 'error',
           message: '复制失败'
         });
@@ -443,7 +442,7 @@
       //添加问卷
       addWj(){
         if (this.willAddWj.title == ''){
-          this.$message({
+          this.$messageE({
             type: 'error',
             message: '标题不能为空'
           });
@@ -467,18 +466,19 @@
           org:that.willAddWj.org
         })
           .then(data=>{
-            console.log(data);
-            if(data.code==0){
-              that.$message({
+            // console.log("add wj data",data);
+            // console.log("addwj data.data",data.data);
+            if(data.data.code==0){
+              that.$messageE({
                 type: 'success',
                 message: '保存成功!'
               });
               that.getWjList();
             }
             else{
-              that.$message({
+              that.$messageE({
                 type: 'error',
-                message: data.msg
+                message: data.data.msg
               });
             }
           });
@@ -491,7 +491,7 @@
         const that = this;
         axios.get('/api/questionnaire/query')
           .then(data=>{
-            console.log("wjlist data",data);
+            // console.log("wjlist data",data);
             that.wjList=data.data.data;
             console.log("wjlist",that.wjList)
             that.loading=false;
@@ -501,7 +501,7 @@
       },
       //删除问卷
       deleteWj(){
-        this.$confirm('确定删除'+this.nowSelect.title+'? 删除后不可恢复！', '提示', {
+        this.$confirmE('确定删除'+this.nowSelect.title+'? 删除后不可恢复！', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -522,16 +522,17 @@
         //       });
         const that = this;
         axios({
-          method: 'post',
+          method: 'get',
           url: '/api/questionnaire/delete',
           params:{
             wjId:that.nowSelect.id
           }
         })
         .then(data=>{
-            console.log(data);
-            if(data.code==0){
-              that.$message({
+          // console.log("DELETE DATA:",data);
+            // console.log("DELETE data.data:",data.data);
+            if(data.data.code==0){
+              that.$messageE({
                 type: 'success',
                 message: '删除成功!'
               });
@@ -541,7 +542,7 @@
               that.defaultActive=1;
             }
             else{
-              that.$message({
+              that.$messageE({
                 type: 'error',
                 message: data.data.msg
               });

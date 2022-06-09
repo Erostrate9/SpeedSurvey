@@ -21,10 +21,12 @@ import { notification } from 'ant-design-vue'
 import { message } from 'ant-design-vue'
 import './plugins/element.js'
 import {Message} from 'element-ui';
+import { MessageBox } from 'element-ui';
 
 Vue.use(VueClipboard);
 Vue.use(ElementUI);
 Vue.use(antd);
+Vue.use(MessageBox);
 Vue.config.productionTip = false
 
 // Vue.use(Layout)
@@ -48,6 +50,7 @@ Vue.config.productionTip = false
 // Vue.use(Result)
 Vue.use(Message);
 Vue.prototype.$messageE = Message;
+Vue.prototype.$confirmE = MessageBox.confirm;
 
 Vue.prototype.$notification = notification
 Vue.prototype.$message = message

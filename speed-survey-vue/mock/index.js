@@ -28,46 +28,46 @@ module.exports = function(app){
             res.json(Mock.mock(json))
         });
         app.post('/api/test',function(req,res){
-            console.log(req.querys);
+            // console.log(req.querys);
             var json = getJsonFile('./userInfo.json5');
             res.json(Mock.mock(json));
         })
         app.post('/api/design',jsonParser,function(req,res){
-            console.log(req.body)
+            // console.log(req.body)
             var json = getJsonFile('./userInfo.json5');
             res.json(Mock.mock(json));
         });
 
         app.get('/api/questionnaire/query',jsonParser,(req,res)=>{
             // var body=req.body;
-            console.log("wj_list",req.query);
+            // console.log("wj_list query:",req.query);
             var json = getJsonFile('./wjlist.json5');
             res.json(Mock.mock(json));
         });
         app.get('/api/questionnaire/queryDetail',jsonParser,(req,res)=>{
             // var body=req.body;
-            console.log("question_list",req.query);
+            // console.log("question_list",req.query);
             var json = getJsonFile('./questionlist.json5');
             // console.log(json);
             res.json(Mock.mock(json));
         });
         app.get('/api/text_result/list',jsonParser,(req,res)=>{
-            var body=req.body;
-            console.log(body);
+            // console.log("text_result query:",req.query);
             var json = getJsonFile('./text_answer_detail.json5');
             // console.log(json);
             res.json(Mock.mock(json));
         });
         app.get('/api/data_analysis',jsonParser,(req,res)=>{
             var body=req.body;
-            console.log(body);
+            // console.log("data_analysis query:",req.query);
             var json = getJsonFile('./data_analysis.json5');
             // console.log(json);
             res.json(Mock.mock(json));
         });
-        app.get('/api/org_list',(req,res)=>{
+        //获取用户创建的组织列表
+        app.get('/api/org/owner/list',(req,res)=>{
             // console.log("getOrgList body",req.body);
-            console.log("getOrgList query",req.query);
+            // console.log("getOrgList query",req.query);
             var json = getJsonFile('./org_list.json5');
             // console.log(json);
             res.json(Mock.mock(json));
@@ -76,9 +76,37 @@ module.exports = function(app){
             var json = getJsonFile('./logincheck.json5');
             // console.log(json);
             res.json(Mock.mock(json));
-        })
-        
-
+        });
+        app.get('/api/questionnaire/delete',(req,res)=>{
+            // console.log("questionnaire_delete query:",req.query);
+            var json = getJsonFile('./delete_wj_success.json5');
+            // console.log(json);
+            res.json(Mock.mock(json));
+        });
+        app.post('/api/push_wj',(req,res)=>{
+            // console.log("push_wj query:",req.query);
+            var json = getJsonFile('./push_wj_success.json5');
+            // console.log(json);
+            res.json(Mock.mock(json));
+        });
+        app.post('/api/addwj',jsonParser,(req,res)=>{
+            // console.log("addwj body:",req.body);
+            var json = getJsonFile('./add_wj_success.json5');
+            // console.log(json);
+            res.json(Mock.mock(json));
+        });
+        app.get('/api/del_question',(req,res)=>{
+            // console.log("del_question query:",req.query);
+            var json = getJsonFile('./delete_question_success.json5');
+            // console.log(json);
+            res.json(Mock.mock(json));
+        });
+        app.post('/api/add_question',jsonParser,(req,res)=>{
+            // console.log("add_question body:",req.body);
+            var json = getJsonFile('./add_question_success.json5');
+            // console.log(json);
+            res.json(Mock.mock(json));
+        });
     
     }
 }
