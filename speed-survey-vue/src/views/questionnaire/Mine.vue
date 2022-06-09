@@ -89,7 +89,7 @@
         </el-form-item>
         <el-form-item label="发布组织" c>
           <el-select v-model="willAddWj.org" placeholder="请选择发布组织" >
-            <el-option label="不发布到组织" value="" ></el-option>
+            <el-option label="不发布到组织" :value="0" ></el-option>
             <el-option v-for="(item,index) in orgList" :key="index" :label="item.orgName" :value="item.orgId"></el-option>
           </el-select>
         </el-form-item>
@@ -221,6 +221,7 @@
       },
     },
     methods:{
+      //添加模板
       addTemp(){
         designOpera({
           opera_type:'add_temp',
@@ -230,7 +231,7 @@
             console.log(data);
           })
       },
-      //使用问卷
+      //使用问卷模板
       useTemp(item){
         this.tempLoading=true;
         designOpera({
@@ -255,7 +256,7 @@
       openTemp(){
         this.tempDialog=true;
         this.changeTempPage(1);
-//        this.getTempWjList();
+       this.getTempWjList();
       },
       //改变模板库页码
       changeTempPage(page){
@@ -279,21 +280,26 @@
       },
       //检查登录是否过期
       logincheck(){
-          designOpera({
-          opera_type:'logincheck',
+        const that= this;
+        //   designOpera({
+        //   opera_type:'logincheck',
+        // })
+        axios({
+          method: 'get',
+          url: '/api/logincheck',
         })
         .then(data=>{
           console.log(data);
-          if(data.code==404){//如果返回的错误是404，跳转到登录页面
-            this.$message({
+          if(data.code==500){//如果返回的错误是404，跳转到登录页面
+            that.$message({
               type: 'error',
               message: '您还未登录，请登录',
               showClose: true
             });
-            this.$router.push({path:'/login'})
+            that.$router.push({path:'/user/login'})
           }
           else{
-            this.getWjList();
+            that.getWjList();
           }
         })
       },
@@ -318,23 +324,31 @@
         let status=1;
         if(this.nowSelect.status==1)
             status=0;
-        designOpera({
-          opera_type:'push_wj',
-          username:'test',
-          wjId:this.nowSelect.id,
-          status:status
+        const that = this;
+        // designOpera({
+        //   opera_type:'push_wj',
+        //   username:'test',
+        //   wjId:this.nowSelect.id,
+        //   status:status
+        // })
+        axios({
+          method: 'post',
+          url: '/api/org_list',
+          params:{
+            status:status
+          }
         })
           .then(data=>{
             console.log(data);
             if(data.code==0){
-              this.$message({
+              that.$message({
                 type: 'success',
                 message: status==1?'问卷发布成功！':'问卷暂停成功！'
               });
-              this.getWjList();
+              that.getWjList();
             }
             else{
-              this.$message({
+              that.$message({
                 type: 'error',
                 message: data.msg
               });
@@ -435,24 +449,34 @@
           });
           return;
         }
-        designOpera({
-          opera_type:'add_wj',
-          username:'test',
-          title:this.willAddWj.title,
-          id:this.willAddWj.id,
-          desc:this.willAddWj.desc,
+        const that = this;
+        // designOpera({
+        //   opera_type:'add_wj',
+        //   username:'test',
+        //   title:this.willAddWj.title,
+        //   id:this.willAddWj.id,
+        //   desc:this.willAddWj.desc,
+        //   ipRestrict:this.willAddWj.ipRestrict,
+        //   org:this.willAddWj.org
+        // })
+        axios.post('/api/addwj',{
+          title:that.willAddWj.title,
+          id:that.willAddWj.id,
+          desc:that.willAddWj.desc,
+          ipRestrict:that.willAddWj.ipRestrict,
+          org:that.willAddWj.org
         })
           .then(data=>{
             console.log(data);
             if(data.code==0){
-              this.$message({
+              that.$message({
                 type: 'success',
                 message: '保存成功!'
               });
-              this.getWjList();
+              that.getWjList();
             }
             else{
-              this.$message({
+              that.$message({
                 type: 'error',
                 message: data.msg
               });
@@ -485,26 +509,43 @@
           type: 'warning'
         }).then(() => {
           this.loading=true;
-          designOpera({
-          opera_type:'delete_wj',
-          username:'test',
-          id:this.nowSelect.id
+          
+        //   designOpera({
+        //   opera_type:'delete_wj',
+        //   username:'test',
+        //   id:this.nowSelect.id
+        // })
+        //   .then(data=>{
+        //     console.log(data);
+        //     if(data.code==0){
+        //       this.$message({
+        //         type: 'success',
+        //         message: '删除成功!'
+        //       });
+        const that = this;
+        axios({
+          method: 'post',
+          url: '/api/delete_wj',
+          params:{
+            wjId:that.nowSelect.id
+          }
         })
-          .then(data=>{
+        .then(data=>{
             console.log(data);
             if(data.code==0){
-              this.$message({
+              that.$message({
                 type: 'success',
                 message: '删除成功!'
               });
-              this.loading=false;
-              this.getWjList();
-              this.defaultActive=1;
+
+              that.loading=false;
+              that.getWjList();
+              that.defaultActive=1;
             }
             else{
-              this.$message({
+              that.$message({
                 type: 'error',
-                message: data.msg
+                message: data.data.msg
               });
             }
           })
