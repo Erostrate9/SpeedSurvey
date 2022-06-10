@@ -112,8 +112,8 @@
                start_time,
                end_time
         from questionnaire
-        where password_required = 0
-          and belong_organization = 0;
+        where (password_required is null or password_required = 0)
+          and (belong_organization is null or belong_organization = 0);
     </select>
     <select id="selectByUrl" resultMap="questionnaireMap">
         select id,
