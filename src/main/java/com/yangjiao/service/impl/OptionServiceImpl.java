@@ -13,6 +13,12 @@ public class OptionServiceImpl implements OptionService {
     @Autowired
     private OptionMapper optionMapper;
 
+
+    @Override
+    public Option queryById(int id) {
+        return optionMapper.selectById(id);
+    }
+
     @Override
     public Option add(Option option) {
         optionMapper.insert(option);
@@ -33,5 +39,10 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public Integer getMaxOrder(int questionId) {
         return optionMapper.getMaxOrderByQuestionId(questionId);
+    }
+
+    @Override
+    public int deleteNotInIds(Integer[] ids) {
+        return optionMapper.deleteNotInIds(ids);
     }
 }

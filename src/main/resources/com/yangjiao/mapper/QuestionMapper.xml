@@ -11,11 +11,12 @@
         <result property="title" column="title"/>
         <result property="type" column="type"/>
         <result property="isRequired" column="is_required"/>
+        <result property="isPrivate" column="is_private"/>
 
     </resultMap>
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into question(questionnaire_id, order_number, title, type, is_required)
-        values (#{questionnaireId}, #{orderNumber}, #{title}, #{type}, #{isRequired})
+        insert into question(questionnaire_id, order_number, title, type, is_required, is_private)
+        values (#{questionnaireId}, #{orderNumber}, #{title}, #{type}, #{isRequired}, #{isPrivate})
     </insert>
     <update id="update">
         update question
@@ -34,13 +35,13 @@
         where id = #{id}
     </delete>
     <select id="selectAllByQuestionnaireId" resultMap="questionMap">
-        select id, questionnaire_id, order_number, title, type, is_required
+        select id, questionnaire_id, order_number, title, type, is_required, is_private
         from question
         where questionnaire_id = #{questionnaireId}
         order by id
     </select>
     <select id="selectById" resultMap="questionMap">
-        select id, questionnaire_id, order_number, title, type, is_required
+        select id, questionnaire_id, order_number, title, type, is_required, is_private
         from question
         where id = #{id}
     </select>

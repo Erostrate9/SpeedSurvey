@@ -68,35 +68,35 @@ public class QuestionnaireController {
     // *********************************** Speed-Survey ***********************************
     @PostMapping("/add")
     @ResponseBody
-    public Map<String,Object> doAdd(@RequestBody  Map<String,Object> questionnaireMap,HttpSession httpSession){
-        User user = (User)httpSession.getAttribute("user");
-        if(user==null){
-            return  ResponseData.create().error("未登录").getResponse();
+    public Map<String, Object> doAdd(@RequestBody Map<String, Object> questionnaireMap, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null) {
+            return ResponseData.create().error("未登录").getResponse();
         }
-        String title = (String)questionnaireMap.get("title");
-        Integer id = (Integer)questionnaireMap.get("id");
-        String desc = (String)questionnaireMap.get("desc");
-        Boolean ipRestrict =(Boolean)questionnaireMap.get("ipRestrict");
-        Integer org = (Integer)questionnaireMap.get("org");
+        String title = (String) questionnaireMap.get("title");
+        Integer id = (Integer) questionnaireMap.get("id");
+        String desc = (String) questionnaireMap.get("desc");
+        Boolean ipRestrict = (Boolean) questionnaireMap.get("ipRestrict");
+        Integer org = (Integer) questionnaireMap.get("org");
         Questionnaire questionnaire = new Questionnaire();
         questionnaire.setTitle(title);
         questionnaire.setUserId(user.getId());
         questionnaire.setDescription(desc);
-        if(ipRestrict){
+        if (ipRestrict) {
             questionnaire.setIpLimit(1);
-        }else{
+        } else {
             questionnaire.setIpLimit(0);
         }
         questionnaire.setBelongOrganization(org);
-        if(id==null || id==0){ //创建新闻卷
+        if (id == null || id == 0) { //创建新闻卷
             Questionnaire questionnaireCreate = questionnaireService.create(questionnaire);
-            if(questionnaireCreate==null){
+            if (questionnaireCreate == null) {
                 return ResponseData.create().error("问卷创建/修改成功").getResponse();
             }
-        }else{ //修改问卷
+        } else { //修改问卷
             questionnaire.setId(id);
             Questionnaire questionnaireUpdate = questionnaireService.update(questionnaire);
-            if(questionnaireUpdate==null){
+            if (questionnaireUpdate == null) {
                 return ResponseData.create().error("问卷创建/修改成功").getResponse();
             }
         }
@@ -149,6 +149,48 @@ public class QuestionnaireController {
         }
         return ResponseData.create().success("问卷状态修改成功").getResponse();
     }
+
+    @GetMapping("/analysis")
+    @ResponseBody
+    public Map<String, Object> doAnalysis(int wjId) {
+        if (questionnaireService.queryById(wjId) == null) {
+            return ResponseData.create().error("该问卷不存在").getResponse();
+        }
+
+        List<Question> questions = questionService.queryALlByQuestionnaireId(wjId);
+
+        List<Map<String, Object>> analysisResultMaps = new ArrayList<>();
+        for (Question question : questions) {
+            Map<String, Object> analysisResultMap = new HashMap<>();
+            analysisResultMap.put("title", question.getTitle());
+            analysisResultMap.put("type", question.getType());
+            analysisResultMap.put("questionId", question.getId());
+            if (question.getType() == 0) { //填空题
+                analysisResultMap.put("result", "");
+            } else { //单选/多选题
+                List<Option> options = optionService.queryALlByQuestionId(question.getId());
+                List<Map<String, Object>> resultMaps = new ArrayList<>();
+                int totalCount = 0;
+                for (Option option : options) {
+                    totalCount += option.getCount();
+                }
+                for (Option option : options) {
+                    Map<String, Object> resultMap = new HashMap<>();
+                    resultMap.put("option", option.getContent());
+                    int count = option.getCount();
+                    resultMap.put("count", count);
+                    resultMap.put("percent", count / totalCount);
+                    resultMaps.add(resultMap);
+                }
+                analysisResultMap.put("result", resultMaps);
+
+            }
+            analysisResultMaps.add(analysisResultMap);
+        }
+        return ResponseData.create().success().setData(analysisResultMaps).getResponse();
+    }
+
+
     // *********************************** Speed-Survey ***********************************
 
 
@@ -231,6 +273,14 @@ public class QuestionnaireController {
             } else if (answer.getType() == 1) { //单选题
                 OptionResult optionResult = new OptionResult();
                 optionResult.setUserId(userId);
+
+                //更新选项表的count字段
+                int optionId = answer.getOptionId();
+                Option option = optionService.queryById(optionId);
+                option.setCount(option.getCount() + 1);
+                optionService.update(option);
+
+
                 optionResult.setOptionId(answer.getOptionId());
                 OptionResult optionResultAdd = optionResultService.add(optionResult);
                 if (optionResultAdd == null) {

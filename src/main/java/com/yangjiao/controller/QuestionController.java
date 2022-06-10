@@ -58,7 +58,6 @@ public class QuestionController {
         Integer type = (Integer) questionMap.get("type");
 
 
-
         System.out.println(questionMap.get("options").getClass());
 
         Boolean isRequired = (Boolean) questionMap.get("isRequired");
@@ -100,7 +99,14 @@ public class QuestionController {
                 return ResponseData.create().error("问题创建/修改失败").getResponse();
             }
         }
+        List<Integer> optionIntList = new ArrayList<Integer>();
         ArrayList<Map> optionMaps = (ArrayList<Map>) questionMap.get("options");
+        for (Map optionMap : optionMaps) {
+            optionIntList.add((Integer) optionMap.get("id"));
+        }
+        Integer[] optionInts = optionIntList.toArray(new Integer[optionIntList.size()]);
+        //删除选项
+        optionService.deleteNotInIds(optionInts);
         for (Map optionMap : optionMaps) {
             Integer optionId = (Integer) optionMap.get("id");
             String optionTitle = (String) optionMap.get("title");
@@ -168,7 +174,8 @@ public class QuestionController {
             questionMap.put("title", question.getTitle());
             questionMap.put("type", question.getType());
             questionMap.put("id", question.getId());
-            questionMap.put("must", question.getIsRequired());
+            questionMap.put("must", question.getIsRequired() == 1);
+            questionMap.put("isPrivate", question.getIsPrivate() == 1);
             if (question.getType() != 0) { //为单选/多选题 则加入选项信息
                 List<Option> options = optionService.queryALlByQuestionId(question.getId());
                 questionMap.put("row", options.size());

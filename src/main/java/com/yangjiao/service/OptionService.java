@@ -10,4 +10,6 @@ public interface OptionService {
     List<Option> queryALlByQuestionId(int questionId);
     Option update(Option option);
     Integer getMaxOrder(int questionId);
+    int deleteNotInIds(Integer[] ids);
+    Option queryById(int id);
 }

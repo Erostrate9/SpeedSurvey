@@ -23,6 +23,13 @@
         where id = #{id}
 
     </update>
+    <delete id="deleteNotInIds">
+        delete from `option`
+        where id not in
+        <foreach collection="ids" item="" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
     <select id="selectById" resultMap="option">
         select id, question_id, content, order_number,count
         from `option`
