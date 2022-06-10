@@ -308,7 +308,10 @@
         const that =this;
         axios({
           method: 'get',
-          url: '/api/org/owner/list'
+          url: 'http://47.110.133.7:8889/api/org/owner/list',
+          params:{
+            ownerId:2
+          }
         })
         .then(data=>{
           console.log("getOrgList data.data.data",data.data.data)

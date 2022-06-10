@@ -26,7 +26,7 @@
         </div>
 
         <!--单选题展示-->
-        <div v-if="item.type=='radio'">
+        <div v-if="item.type=='1'">
           <div class="text item"  v-for="(option,index) in item.options" :key="index">
             <el-radio v-model="item.radioValue" :label="index" style="margin: 5px;">{{ option.title }}</el-radio>
           </div>
@@ -34,7 +34,7 @@
         
 
         <!--多选题展示-->
-        <el-checkbox-group v-if="item.type=='checkbox'" v-model="item.checkboxValue">
+        <el-checkbox-group v-if="item.type=='2'" v-model="item.checkboxValue">
           <div class="text item"  v-for="(option,index) in item.options" :key="index">
             <el-checkbox :label="index" style="margin: 5px;">{{ option.title }}</el-checkbox>
           </div>
@@ -42,7 +42,7 @@
 
         <!--填空题展示-->
         <el-input
-          v-if="item.type=='text'"
+          v-if="item.type==0"
           type="textarea"
           :rows="item.row"
           resize="none"
@@ -78,7 +78,7 @@
           <el-input v-model="willAddQuestion.title" placeholder="请输入标题" ></el-input>
         </el-form-item>
 
-        <template v-if="willAddQuestion.type=='radio'||willAddQuestion.type=='checkbox'">
+        <template v-if="willAddQuestion.type==1||willAddQuestion.type==2">
           <el-form-item :label="'选项'+(index+1)" v-for="(item,index) in willAddQuestion.options" :key="index">
             <el-row>
               <el-col :span="16">
@@ -92,7 +92,7 @@
           </el-form-item>
           <el-button type="primary" plain class="addOptionButton" @click="addOption">新增选项</el-button>
         </template>
-        <template v-if="willAddQuestion.type=='text'">
+        <template v-if="willAddQuestion.type==0">
           <el-form-item label="填空">
             <el-input type="textarea"
   :rows="willAddQuestion.row" style="width: 80%" resize="none"></el-input>
@@ -139,15 +139,15 @@
         },
         allType:[
           {
-            value:'radio',
+            value:1,
             label:'单选题',
           },
           {
-            value:'checkbox',
+            value:2,
             label:'多选题',
           },
           {
-            value:'text',
+            value:0,
             label:'填空题',
           },
         ],
@@ -182,7 +182,10 @@
           params:{wjId:that.wjId}
         })
         .then(data=>{
+          // console.log("question list : data.data",data.data)
+          // console.log("question list : data.data.data",data.data.data)
           that.detail=data.data.data;
+          console.log("this.detail:",that.detail)
           that.lodaing=false;
         })
       },
@@ -278,7 +281,7 @@
           isRequired:that.willAddQuestion.must,
           isPrivate:that.willAddQuestion.isPrivate
         };
-        console.log(item);
+        console.log("add question item",item);
         axios.post('/api/question/add',item)
           .then(data=>{
             // console.log("add_question data.data",data.data);

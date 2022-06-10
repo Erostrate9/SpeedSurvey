@@ -28,7 +28,7 @@
       </div>
       <!--如果数据库中的问题类型为单项选择或者多项选择-->
       <!--则将数据库中的数据以表格、柱状图、饼状图、圆环图、条形图的方式进行展示-->
-      <div v-if="item.type == 'radio' || item.type == 'checkbox'">
+      <div v-if="item.type == 1 || item.type == 2">
         <el-table
           size="small"
           :data="item.result"
@@ -100,7 +100,7 @@
         <div :id="'tz' + index" class="tz" v-show="visible[index] == 4"></div>
       </div>
       <!--如果数据库中的问题类型为text类型则将数据以弹窗表格的形式进行显示-->
-      <div v-if="item.type == 'text'">
+      <div v-if="item.type == 0">
         <el-button
           size="mini"
           type="primary"
