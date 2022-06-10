@@ -37,11 +37,16 @@
         select id, questionnaire_id, order_number, title, type, is_required
         from question
         where questionnaire_id = #{questionnaireId}
-        order by order_number
+        order by id
     </select>
     <select id="selectById" resultMap="questionMap">
         select id, questionnaire_id, order_number, title, type, is_required
         from question
         where id = #{id}
+    </select>
+    <select id="getMaxOrderByQuestionnaireId" resultType="java.lang.Integer">
+        select MAX(order_number)
+        from question
+        where questionnaire_id = #{questionnaireId}
     </select>
 </mapper>

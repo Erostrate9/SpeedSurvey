@@ -10,7 +10,7 @@
         <result property="orderNumber" column="order_number"/>
         <result property="count" column="count"/>
     </resultMap>
-    <insert id="insert">
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into `option`(question_id, content, order_number, count)
         values (#{questionId}, #{content}, #{orderNumber}, #{count})
     </insert>
@@ -32,7 +32,12 @@
         select id, question_id, content, order_number,count
         from `option`
         where question_id = #{questionId}
-        order by order_number
+        order by id
+    </select>
+    <select id="getMaxOrderByQuestionId" resultType="java.lang.Integer">
+        select MAX(order_number)
+        from `option`
+        where question_id = #{questionId}
     </select>
 
 </mapper>

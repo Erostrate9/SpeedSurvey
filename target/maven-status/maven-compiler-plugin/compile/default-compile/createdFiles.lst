@@ -15,6 +15,7 @@ com\yangjiao\service\UserService.class
 com\yangjiao\controller\OptionController.class
 com\yangjiao\service\impl\QuestionnaireServiceImpl.class
 com\yangjiao\mapper\QuestionnaireMapper.class
+com\yangjiao\config\WebMvcConfig.class
 com\yangjiao\service\OrganizationService.class
 com\yangjiao\domain\QuestionnaireComplete.class
 com\yangjiao\domain\Answer.class
