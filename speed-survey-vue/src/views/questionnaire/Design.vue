@@ -136,6 +136,7 @@
           ],
           row:1,
           must:false,//是否必填
+          isPrivate:false
         },
         allType:[
           {
@@ -321,6 +322,7 @@
         this.willAddQuestion.row=item.row;
         this.willAddQuestion.must=item.must;
         this.willAddQuestion.id=item.id;
+        this.willAddQuestion.isPrivate=item.isPrivate;
         this.dialogTitle='编辑问题';
         this.dialogShow=true;
       },

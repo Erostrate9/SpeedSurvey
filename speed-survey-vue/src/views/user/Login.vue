@@ -128,7 +128,9 @@ export default {
       });
     },
     loginSuccess(res) {
-      console.log(res);
+      console.log("res.data",res.data);
+      localStorage.setItem("useInfo",JSON.stringify(res.data));
+      // console.log("",res.data.id);
       this.$router.push({ path: "/" });
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {

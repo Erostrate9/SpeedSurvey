@@ -16,10 +16,11 @@ export default [
                 component: () => import('@/views/questionnaire/Square'),
             },
             {
-                path: 'questionnaire',
-                name: 'questionnaire',
-                component: () => import('@/views/questionnaire/Mine'),
+                path: 'qestionnaire_mine',
+                name: 'qestionnaire_mine',
                 meta: { title: '我的问卷', icon: 'file' },
+                component: () => import('@/views/questionnaire/Mine'),
+
             },
             {
                 path: 'organization',

@@ -297,7 +297,7 @@ export default {
       const that = this;
       axios({
         method:"get",
-        url:'/api/data_analysis',
+        url:'/api/questionnaire/analysis',
         params:{wjId: id}
       })
       .then(data=>{

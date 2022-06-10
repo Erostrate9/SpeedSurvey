@@ -163,6 +163,7 @@
     },
     data(){
       return{
+        userInfo:{},
         defaultActive:1,//当前激活菜单
         activeName:'wjsj',//标签页当前选择项
         wjList:[],//问卷列表
@@ -198,7 +199,6 @@
     },
     mounted(){
       this.logincheck();
-      this.getOrgList();
     },
     computed:{
       //现在选中的问卷信息
@@ -293,7 +293,10 @@
           // console.log("logincheck data.data",data.data);
           // console.log("logincheck data",data);
           if(data.data.code==0){
+            that.userInfo=JSON.parse(localStorage.useInfo);
+            console.log(that.userInfo);
             that.getWjList();
+            that.getOrgList();
           }else{//如果返回的错误是，跳转到登录页面
             that.$messageE({
               type: 'error',
@@ -311,7 +314,7 @@
           method: 'get',
           url: 'http://47.110.133.7:8889/api/org/owner/list',
           params:{
-            ownerId:2
+            userId:that.userInfo.id
           }
         })
         .then(data=>{
@@ -367,7 +370,7 @@
           });
           return;
         }
-        this.shareInfo.url=window.location.origin+"/detail?"+this.nowSelect.id;//问卷链接
+        this.shareInfo.url=window.location.origin+"/questionnaire/detail?id="+this.nowSelect.id;//问卷链接
         this.shareDialogShow=true;
       },
       //生成二维码
@@ -405,7 +408,7 @@
       },
       //预览问卷
       previewWj(){
-        let url=window.location.origin+"/display/"+this.nowSelect.id;//问卷链接
+        let url=window.location.origin+"/questionnaire/detail?id="+this.nowSelect.id;//问卷链接
         console.log(url);
         window.open(url);
       },

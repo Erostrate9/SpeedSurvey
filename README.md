@@ -342,6 +342,7 @@ authority：0-普通用户，1-高级用户，2-管理员
             id:"@id()",
             row:4,
             must:"@boolean()",
+            isPrivate:"@boolean()",
             options:[
                 {
                     title:"@cname()",//option表的content
