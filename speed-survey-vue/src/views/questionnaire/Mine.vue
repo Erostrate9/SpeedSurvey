@@ -180,6 +180,7 @@
           title:'',
           flag:0,
           desc:'感谢您能抽时间参与本次问卷，您的意见和建议就是我们前行的动力！',
+          status:0,
           ipRestrict:false,
           org:0
         },
@@ -366,7 +367,7 @@
           });
           return;
         }
-        this.shareInfo.url=window.location.origin+"/display/"+this.nowSelect.id;//问卷链接
+        this.shareInfo.url=window.location.origin+"/detail?"+this.nowSelect.id;//问卷链接
         this.shareDialogShow=true;
       },
       //生成二维码
@@ -415,15 +416,17 @@
         this.getOrgList();
       },
       testClick(){
-        axios.get('http://47.110.133.7:8889/api/org/owner/list?ownerId=2',{
-          headers: {
-            "Content-Type": "application/octet-stream",
-            "Access-Control-Allow-Origin": "*",
-          }
-        })
-        .then(data=>{
-          console.log("test data:",data);
-        })
+        // console.log(sessionStorage);
+
+        // axios.get('http://47.110.133.7:8889/api/org/owner/list?ownerId=2',{
+        //   headers: {
+        //     "Content-Type": "application/octet-stream",
+        //     "Access-Control-Allow-Origin": "*",
+        //   }
+        // })
+        // .then(data=>{
+        //   console.log("test data:",data);
+        // })
         // axios.post("/api/wjlist", {
         //   id:"123",
         //   hid:'aaa',
@@ -440,7 +443,8 @@
           flag:0,
           desc:'感谢您能抽时间参与本次问卷，您的意见和建议就是我们前行的动力！',
           ipRestrict:false,
-          org:0
+          org:0,
+          status:0
         };
         this.getOrgList();
       },
