@@ -179,7 +179,7 @@ public class QuestionnaireController {
                     resultMap.put("option", option.getContent());
                     int count = option.getCount();
                     resultMap.put("count", count);
-                    resultMap.put("percent", count / totalCount);
+                    resultMap.put("percent", totalCount != 0 ? count / totalCount : 0);
                     resultMaps.add(resultMap);
                 }
                 analysisResultMap.put("result", resultMaps);
