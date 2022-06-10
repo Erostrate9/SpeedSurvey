@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangjiao.mapper.OptionMapper">
+    <resultMap id="option" type="com.yangjiao.domain.Option">
+        <id property="id" column="id"/>
+        <result property="questionId" column="question_id"/>
+        <result property="content" column="content"/>
+        <result property="orderNumber" column="order_number"/>
+        <result property="count" column="count"/>
+    </resultMap>
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into `option`(question_id, content, order_number, count)
+        values (#{questionId}, #{content}, #{orderNumber}, #{count})
+    </insert>
+    <update id="update">
+        update `option`
+        <set>
+            <if test="questionId != null and questionId != ''">question_id = #{questionId},</if>
+            <if test="content != null and content != ''">content = #{content}</if>
+        </set>
+        where id = #{id}
+
+    </update>
+    <select id="selectById" resultMap="option">
+        select id, question_id, content, order_number,count
+        from `option`
+        where id = #{id}
+    </select>
+    <select id="selectAllByQuestionId" resultMap="option">
+        select id, question_id, content, order_number,count
+        from `option`
+        where question_id = #{questionId}
+        order by id
+    </select>
+    <select id="getMaxOrderByQuestionId" resultType="java.lang.Integer">
+        select MAX(order_number)
+        from `option`
+        where question_id = #{questionId}
+    </select>
+
+</mapper>
