@@ -116,8 +116,6 @@
 </template>
 
 <script>
-import { getAllInPublic } from "@/api/questionnaire";
-const questionnaires = [];
 const hotOrganizations = [
   {
     name: "哈工大",
@@ -141,39 +139,19 @@ const hotOrganizations = [
 export default {
   data() {
     return {
-      questionnaires,
       hotOrganizations,
     };
   },
   methods: {
-    GetAllInPublic() {
-      return new Promise((resolve, reject) => {
-        getAllInPublic()
-          .then((response) => {
-            if (response.code == 0) {
-              resolve(response);
-            } else if (response.code == 500) {
-              reject(response);
-            }
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    requestFailed(err) {
-      this.isLoginError = true;
-      this.$notification["error"]({
-        message: "错误",
-        description: err.msg || "请求出现错误，请稍后再试",
-        duration: 4,
-      });
-    },
+  
+  },
+  beforeCreate() {
+    window.location.href = "http://"+window.location.host+"/team.html"
+    console.log(window.location.href);
   },
   mounted() {
-    this.GetAllInPublic()
-      .then((res) => (this.questionnaires = res.data))
-      .catch((err) => this.requestFailed(err));
+    window.location.href = "http://"+window.location.host+"/team.html"
+    console.log(window.location.href);
   },
 };
 </script>

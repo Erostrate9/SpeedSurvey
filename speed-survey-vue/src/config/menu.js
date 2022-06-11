@@ -23,10 +23,10 @@ export default [
 
             },
             {
-                path: 'organization',
+                path: 'http://localhost:8080/team.html',
                 name: 'organization',
-                component: () => import('@/views/organization/Mine'),
-                meta: { title: '我的组织', icon: 'team' },
+                // component: () => import('@/views/organization/Mine'),
+                meta: { title: '我的组织', icon: 'team',target:"_self" },
                 // children: [
                 //     {
                 //         path: 'square',

@@ -159,9 +159,12 @@ export default {
       state.submitBtnLoading = true;
       state.submitBtnDisabled = true;
       validateFields({ force: true }, (err, values) => {
+
         if (!err) {
+          console.log(values)
           var index = 0;
           for (var key in values) {
+            console.log(key)
             if (this.questionCompletes[index].question.type == 0) {
               this.ansers[index].text = values[key];
             } else if (this.questionCompletes[index].question.type == 1) {
@@ -171,8 +174,10 @@ export default {
                 }
               });
             } else if (this.questionCompletes[index].question.type == 2) {
+              
               this.ansers[index].optionIds = [];
               this.questionCompletes[index].options.forEach((option) => {
+                // console.log(values[key])
                 if (values[key].includes(option.content)) {
                   this.ansers[index].optionIds.push(option.id);
                 }

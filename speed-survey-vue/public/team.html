@@ -1,0 +1,64 @@
+<html>
+    <title>速填</title>
+    <link rel="icon" href="./logo.svg">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src = "reactHandle.js"></script>
+    <script src = "render.js"></script>
+    <script src = "get_helper.js"></script>
+    <script src = "jq.js"></script>
+    <style>
+        .bar
+        {
+            background: #000000;
+            width: 100%;
+            height: 8%;
+            position: fixed;
+            top: 0;
+            left:0;
+            z-index: 1;
+        }
+        .avator
+        {
+            width: 7.3%;
+            height: 16%;
+            position: fixed;
+            top: 0;
+            right:0; 
+            z-index: 2;
+        }
+        .noImg
+        {
+            background-color: white;
+            color: black;
+            border: 2px solid #000000;
+            border-radius: 50%;
+            font-size: 24px;
+        }
+    </style>
+    <body id = "bady">
+        <div class="bar">
+            <div style="left: 30%;position : fixed;">
+            <font color = "#ffffff" size = "100%" onclick="reload()">
+                Organization Management
+            </font>
+            </div>
+        </div>
+        
+        <div class="avator">
+            <!-- <div style = "width:50%;height:50%;background:#ffffff;"></div> -->
+            <img width = "100%" height = "100%" style = "top:0;right:0"
+            id = "avator"/>
+            <button class = "noImg" onclick = "createTeam()">create</button>
+        </div>
+        <div style = "top:10%;left:0%;position: fixed;width: 100%;
+        background:#fff;height:100%;overflow:auto;" id = "canvas">
+            <!-- <font color = "#ff0000">
+                NULL
+            </font> -->
+        </div>
+        <script>
+            entry();
+    
+        </script>
+    </body>
+</html>
